@@ -1,12 +1,12 @@
 from django import forms
-from .models import Estudiante
+from .models import Alumno, DocumentacionAdicional
 
-class EstudianteForm(forms.ModelForm):
+class AlumnoForm(forms.ModelForm):
     class Meta:
-        model = Estudiante
-        fields = ['nombre', 'apellido', 'fecha_nacimiento', 'grado', 'direccion', 'documento_identidad', 'certificado_nacimiento', 'comprobante_domicilio']
+        model = Alumno
+        fields = ['nombre', 'apellido', 'fecha_nacimiento', 'documento_identidad']
 
-class EstudianteExistenteForm(forms.ModelForm):
+class DocumentacionAdicionalForm(forms.ModelForm):
     class Meta:
-        model = Estudiante
-        fields = ['nombre', 'apellido', 'grado']
+        model = DocumentacionAdicional
+        fields = ['documento', 'fecha_subida']
