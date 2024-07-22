@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmar Datos</title>
+</head>
+<body>
+    <h1>Confirmar Datos del Estudiante</h1>
+    <p>Nombre: {{ estudiante.nombre }}</p>
+    <p>Apellido: {{ estudiante.apellido }}</p>
+    <p>Grado: {{ estudiante.grado }}</p>
+    <form method="post" action="{% url 'confirmar_datos' estudiante.id %}">
+        {% csrf_token %}
+        <button type="submit">Confirmar Matrícula</button>
+    </form>
+</body>
+</html>
