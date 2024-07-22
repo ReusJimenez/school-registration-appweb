@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Alumno, DocumentacionAdicional
 from .forms import AlumnoForm, DocumentacionAdicionalForm
+VACANTES_TOPE = 1000
 
 def solicitud_matricula(request):
     if request.method == 'POST':
@@ -16,7 +17,13 @@ def solicitud_matricula(request):
     return render(request, 'solicitud_matricula.html', {'form': form})
 
 def verificar_vacantes(request):
-    return render(request, 'verificar_vacantes.html')
+    alumnos_actuales = Alumno.objects.count()
+    vacantes_disponibles = VACANTES_TOPE - alumnos_actuales
+    
+    if vacantes_disponibles > 0:
+        return render(request, 'verificar_vacantes.html', {'vacantes_disponibles': vacantes_disponibles})
+    else:
+        return render(request, 'solicitud_matricula.html', {'mensaje_error': 'No hay vacantes disponibles.'})
 
 def ingresar_datos_alumno(request):
     if request.method == 'POST':

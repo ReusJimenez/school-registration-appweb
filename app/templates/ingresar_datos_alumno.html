@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar Datos del Alumno</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
@@ -15,6 +16,5 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

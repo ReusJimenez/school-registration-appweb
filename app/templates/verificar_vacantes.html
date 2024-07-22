@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Vacantes</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Verificación de Vacantes</h1>
-        <!-- Aquí puedes añadir la lógica para mostrar vacantes -->
-        <p>Verificación automática de vacantes en proceso...</p>
+        <h1 class="mt-5">Verificar Vacantes</h1>
+        {% if vacantes_disponibles > 0 %}
+            <p>Hay {{ vacantes_disponibles }} vacantes disponibles.</p>
+            <a href="{% url 'ingresar_datos_alumno' %}" class="btn btn-primary">Continuar con la matrícula</a>
+        {% else %}
+            <p>No hay vacantes disponibles.</p>
+            <a href="{% url 'solicitud_matricula' %}" class="btn btn-secondary">Volver a la solicitud de matrícula</a>
+        {% endif %}
     </div>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
