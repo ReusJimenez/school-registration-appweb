@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar Datos del Alumno</title>
+    <title>Validar Documentación</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Ingresar Datos del Alumno</h1>
-        <form method="post" class="mt-4">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
+        <h1 class="mt-5">Validación de Documentación</h1>
+        <!-- Aquí puedes añadir la lógica para validar la documentación -->
+        <p>Verificación de la documentación en proceso...</p>
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>

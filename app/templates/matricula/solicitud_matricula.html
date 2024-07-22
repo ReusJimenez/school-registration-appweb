@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Matrícula</title>
+    <title>Solicitud de Matrícula</title>
 </head>
 <body>
-    <h1>Formulario de Matrícula</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h1>Solicitud de Matrícula</h1>
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enviar</button>
