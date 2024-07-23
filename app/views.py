@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Alumno, DocumentacionAdicional
 from .forms import AlumnoForm, DocumentacionAdicionalForm
-VACANTES_TOPE = 1000
+#VACANTES_TOPE = 1000
 
 def solicitud_matricula(request):
     if request.method == 'POST':
