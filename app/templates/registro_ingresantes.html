@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h2>Registro de Ingresantes</h2>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Datos del Apoderado</h3>
+        {{ form_apoderado.as_p }}
+        <h3>Datos del Alumno</h3>
+        {{ form_alumno.as_p }}
+        <button type="submit">Enviar Solicitud de Matrícula</button>
+    </form>
+{% endblock %}

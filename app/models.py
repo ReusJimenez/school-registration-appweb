@@ -4,39 +4,41 @@ class Apoderado(models.Model):
     nombres = models.CharField(max_length=100)
     apellido_paterno = models.CharField(max_length=100)
     apellido_materno = models.CharField(max_length=100)
-    #genero (masculino, femenino)
+    genero = models.CharField(max_length=10, blank=True, null=True)  
     dni_apoderado = models.CharField(max_length=20, unique=True)
-    #parentesco con alumno
-    #celular
-    #email
-    #profesion
-    
-    #def __str__(self):
+    parentesco = models.CharField(max_length=50, blank=True, null=True) 
+    celular = models.CharField(max_length=9, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    profesion = models.CharField(max_length=100, blank=True, null=True)
+
+    def _str_(self):
+        return f"{self.nombres} {self.apellido_paterno} {self.apellido_materno} ({self.dni_apoderado})"
 
 class Alumno(models.Model):
     nombres = models.CharField(max_length=100)
     apellido_paterno = models.CharField(max_length=100)
     apellido_materno = models.CharField(max_length=100)
-    #genero (masculino, femenino)
+    genero = models.CharField(max_length=10, blank=True, null=True)  
     dni_alumno = models.CharField(max_length=20, unique=True)
     fecha_nacimiento = models.DateField()
-    #colegio de procedencia
+    colegio_procedencia = models.CharField(max_length=100, blank=True, null=True)
     es_nuevo = models.BooleanField(default=True)
-    #solo verifica dni_alumno, avisa si algun dato esta incorrecto o si no es alumno antiguo
-    
-    #def __str__(self):
+
+    def _str_(self):
+        return f"{self.nombres} {self.apellido_paterno} {self.apellido_materno} ({self.dni_alumno})"
 
 class DocumentacionAdicional(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     certificado_estudios = models.FileField(upload_to='documentacion/')
     fecha_subida = models.DateField(auto_now_add=True)
-    
-    def __str__(self):
-        return f"Documentación de {self.alumno.nombre} {self.alumno.apellido}"
 
-#para sacar vacantes y avisar
 class Nivel(models.Model):
-    #Nivel
+    nivel = models.CharField(max_length=50, unique=True)  
+    def _str_(self):
+        return self.nivel
 
 class Grado(models.Model):
-    #Grado
+    nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE, related_name='grados')
+    numero = models.PositiveSmallIntegerField()
+    def _str_(self):
+        return f"{self.numero} - {self.nivel}"

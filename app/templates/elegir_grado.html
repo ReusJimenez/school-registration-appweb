@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h2>Elegir Grado</h2>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="nivel">Nivel:</label>
+        <select name="nivel" id="nivel">
+            <option value="Primaria">Primaria</option>
+            <option value="Secundaria">Secundaria</option>
+        </select>
+        <br>
+        <label for="grado">Grado:</label>
+        <select name="grado" id="grado">
+            <!-- Los valores de grado deben actualizarse dinámicamente con JS -->
+        </select>
+        <br>
+        <button type="submit">Elegir Grado</button>
+    </form>
+{% endblock %}

@@ -19,11 +19,8 @@ from django.urls import path, include
 from app import views
 
 urlpatterns = [
-    path('', views.solicitud_matricula, name='solicitud_matricula'),
-    path('verificar_vacantes/', views.verificar_vacantes, name='verificar_vacantes'),
-    path('ingresar_datos_alumno/', views.ingresar_datos_alumno, name='ingresar_datos_alumno'),
-    path('documentacion_adicional/<int:alumno_id>/', views.documentacion_adicional, name='documentacion_adicional'),
-    path('validar_documentacion/', views.validar_documentacion, name='validar_documentacion'),
-    path('confirmar_matricula/<int:alumno_id>/', views.confirmar_matricula, name='confirmar_matricula'),
-    path('mostrar_constancia/<int:alumno_id>/', views.mostrar_constancia, name='mostrar_constancia'),
+    path('', views.home, name='home'),
+    path('elegir-grado/', views.elegir_grado, name='elegir_grado'),
+    path('registro-ingresantes/<str:nivel>/<str:grado>/', views.registro_ingresantes, name='registro_ingresantes'),
+    path('ingresar-certificado-estudios/<int:alumno_id>/', views.ingresar_certificado_estudios, name='ingresar_certificado_estudios'),
 ]
