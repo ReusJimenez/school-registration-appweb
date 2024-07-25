@@ -1,4 +1,4 @@
-{% extends 'app/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <h2>Elegir Grado</h2>
@@ -9,8 +9,7 @@
         {% csrf_token %}
         <label for="nivel">Nivel:</label>
         <select name="nivel" id="nivel">
-            <option value="Primaria">Primaria</option>
-            <option value="Secundaria">Secundaria</option>
+            <!-- Los valores de nivel -->
         </select>
         <br>
         <label for="grado">Grado:</label>

@@ -33,12 +33,14 @@ class DocumentacionAdicional(models.Model):
     fecha_subida = models.DateField(auto_now_add=True)
 
 class Nivel(models.Model):
-    nivel = models.CharField(max_length=50, unique=True)  
+    nivel = models.CharField(max_length=50, unique=True)
+
     def _str_(self):
         return self.nivel
 
 class Grado(models.Model):
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE, related_name='grados')
     numero = models.PositiveSmallIntegerField()
-    def _str_(self):
-        return f"{self.numero} - {self.nivel}"
+
+    def __str__(self):
+        return f"{self.numero} - {self.nivel.nivel}"

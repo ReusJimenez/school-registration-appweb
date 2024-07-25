@@ -5,7 +5,7 @@ from .forms import AlumnoForm, ApoderadoForm, DocumentacionAdicionalForm
 
 # Vista Home
 def home(request):
-    return render(request, 'app/home.html')
+    return render(request, 'home.html')
 
 # Vista Elegir Grado
 def elegir_grado(request):
@@ -15,10 +15,10 @@ def elegir_grado(request):
         # Verificar vacantes
         vacantes_disponibles = Grado.objects.filter(nivel=nivel, numero=grado, vacantes__gt=0).exists()
         if not vacantes_disponibles:
-            return render(request, 'app/elegir_grado.html', {'error': 'Vacantes llenas'})
+            return render(request, 'elegir_grado.html', {'error': 'Vacantes llenas'})
         else:
             return redirect('registro_ingresantes', nivel=nivel, grado=grado)
-    return render(request, 'app/elegir_grado.html')
+    return render(request, 'elegir_grado.html')
 
 # Vista Registro Ingresantes
 def registro_ingresantes(request, nivel, grado):
@@ -38,7 +38,7 @@ def registro_ingresantes(request, nivel, grado):
     else:
         form_apoderado = ApoderadoForm()
         form_alumno = AlumnoForm()
-    return render(request, 'app/registro_ingresantes.html', {'form_apoderado': form_apoderado, 'form_alumno': form_alumno})
+    return render(request, 'registro_ingresantes.html', {'form_apoderado': form_apoderado, 'form_alumno': form_alumno})
 
 # Vista Ingresar Certificado de Estudios
 def ingresar_certificado_estudios(request, alumno_id):
@@ -52,4 +52,4 @@ def ingresar_certificado_estudios(request, alumno_id):
             return HttpResponse('Solicitud enviada correctamente')
     else:
         form = DocumentacionAdicionalForm()
-    return render(request, 'app/ingresar_certificado_estudios.html', {'form': form})
+    return render(request, 'ingresar_certificado_estudios.html', {'form': form})
