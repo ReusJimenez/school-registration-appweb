@@ -25,8 +25,6 @@ urlpatterns = [
     path('elegir-grado/', views.elegir_grado, name='elegir_grado'),
     path('get_grados/<int:nivel_id>/', views.get_grados, name='get_grados'),
     path('registro_ingresantes/', views.registro_ingresantes, name='registro_ingresantes'),
-    path('ingresar-certificado-estudios/<int:alumno_id>/', views.ingresar_certificado_estudios, name='ingresar_certificado_estudios'),
-    
+    path('ingresar_certificado_estudios/', views.ingresar_certificado_estudios, name='ingresar_certificado_estudios'),
+    path('success/', views.SuccessView.as_view(), name='success'),
 ]
-
-#path('registro-ingresantes/<str:nivel>/<str:grado>/', views.registro_ingresantes, name='registro_ingresantes')

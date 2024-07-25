@@ -29,7 +29,7 @@
         document.getElementById('nivel').addEventListener('change', function() {
             var nivelId = this.value;
             var gradoSelect = document.getElementById('grado');
-            gradoSelect.innerHTML = '<option value="">Seleccione un grado</option>';  // Limpiar el select de grados
+            gradoSelect.innerHTML = '<option value="">Seleccione un grado</option>';
 
             if (nivelId) {
                 fetch('/get_grados/' + nivelId + '/')

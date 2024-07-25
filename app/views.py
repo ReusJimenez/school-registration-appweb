@@ -1,12 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 from django.http import JsonResponse
+from django.views.generic import TemplateView
 from .models import Alumno, Apoderado, DocumentacionAdicional, Nivel, Grado
 from .forms import AlumnoForm, ApoderadoForm, DocumentacionAdicionalForm, ElegirGradoForm
 
-# Vista Home
 def home(request):
     return render(request, 'home.html')
 
@@ -34,7 +33,6 @@ def get_grados(request, nivel_id):
     grados = Grado.objects.filter(nivel_id=nivel_id).values('id', 'numero', 'nivel__nivel')
     return JsonResponse(list(grados), safe=False)
 
-# Vista Registro Ingresantes
 def registro_ingresantes(request):
     if request.method == 'POST':
         alumno_form = AlumnoForm(request.POST)
@@ -45,17 +43,12 @@ def registro_ingresantes(request):
             alumno = alumno_form.save()
             apoderado = apoderado_form.save()
             
-            # Verifica si el alumno es nuevo y maneja la documentación
+            # Si el alumno es nuevo, redirige a ingresar_certificado_estudios
             if alumno.es_nuevo:
-                if documentacion_form.is_valid():
-                    documentacion = documentacion_form.save(commit=False)
-                    documentacion.alumno = alumno
-                    documentacion.save()
-                else:
-                    # Manejar errores en el formulario de documentación
-                    messages.error(request, 'Por favor, sube el certificado de estudios.')
+                request.session['alumno_id'] = alumno.id  # Guarda el ID del alumno en la sesión
+                return redirect('ingresar_certificado_estudios')
 
-            # Redirigir o mostrar un mensaje de éxito
+            # Si no es nuevo, guardar y mostrar mensaje de éxito
             messages.success(request, 'Solicitud de matrícula registrada con éxito.')
             return redirect('success')  # Redirige a una página de éxito o similar
 
@@ -70,18 +63,35 @@ def registro_ingresantes(request):
         'documentacion_form': documentacion_form,
     })
 
-# Vista Ingresar Certificado de Estudios
-def ingresar_certificado_estudios(request, alumno_id):
-    alumno = Alumno.objects.get(id=alumno_id)
+def ingresar_certificado_estudios(request):
+    # Verificar si el alumno_id está en la sesión
+    if 'alumno_id' not in request.session:
+        return redirect('elegir_grado')  # Redirige a elegir_grado si no hay alumno_id en la sesión
+
+    # Obtener y eliminar el alumno_id de la sesión
+    alumno_id = request.session.pop('alumno_id')  
+
+    # Manejo del formulario POST
     if request.method == 'POST':
-        form = DocumentacionAdicionalForm(request.POST, request.FILES)
-        if form.is_valid():
-            documentacion = form.save(commit=False)
+        documentacion_form = DocumentacionAdicionalForm(request.POST, request.FILES)
+        
+        # Verificar si el formulario es válido
+        if documentacion_form.is_valid():
+            alumno = Alumno.objects.get(id=alumno_id)
+            documentacion = documentacion_form.save(commit=False)
             documentacion.alumno = alumno
             documentacion.save()
-            messages.success(request, 'Felicidades, se registró con éxito.')
-            return redirect('home')
+            
+            # Mensaje de éxito y redirección
+            messages.success(request, "Felicidades, se registró con éxito.")
+            return redirect('success')
+        else:
+            messages.error(request, 'Por favor, sube el certificado de estudios.')
     else:
-        form = DocumentacionAdicionalForm()
-    
-    return render(request, 'ingresar_certificado_estudios.html', {'form': form})
+        documentacion_form = DocumentacionAdicionalForm()
+
+    # Renderizar el formulario
+    return render(request, 'ingresar_certificado_estudios.html', {'documentacion_form': documentacion_form})
+
+class SuccessView(TemplateView):
+    template_name = 'success.html'

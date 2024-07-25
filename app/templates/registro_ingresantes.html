@@ -7,18 +7,13 @@
             <p style="color: red;">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
-        <h3>Datos del Alumno</h3>
-        {{ alumno_form.as_p }}
-        
         <h3>Datos del Apoderado</h3>
         {{ apoderado_form.as_p }}
-
-        {% if alumno_form.instance.es_nuevo %}
-            <h3>Documentación Adicional</h3>
-            {{ documentacion_form.as_p }}
-        {% endif %}
+        
+        <h3>Datos del Alumno</h3>
+        {{ alumno_form.as_p }}
         
         <button type="submit">Enviar Solicitud de Matrícula</button>
     </form>
