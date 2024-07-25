@@ -35,12 +35,13 @@ class DocumentacionAdicional(models.Model):
 class Nivel(models.Model):
     nivel = models.CharField(max_length=50, unique=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.nivel
 
 class Grado(models.Model):
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE, related_name='grados')
     numero = models.PositiveSmallIntegerField()
+    vacantes = models.PositiveIntegerField(default=100)  # Por ejemplo, inicializa con 30 vacantes
 
     def __str__(self):
         return f"{self.numero} - {self.nivel.nivel}"

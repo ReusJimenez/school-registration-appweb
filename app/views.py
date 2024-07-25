@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Alumno, Apoderado, DocumentacionAdicional, Grado
-from .forms import AlumnoForm, ApoderadoForm, DocumentacionAdicionalForm
+from django.urls import reverse
+from django.contrib import messages
+from .models import Alumno, Apoderado, DocumentacionAdicional, Nivel, Grado
+from .forms import AlumnoForm, ApoderadoForm, DocumentacionAdicionalForm, ElegirGradoForm
 
 # Vista Home
 def home(request):
@@ -10,46 +12,54 @@ def home(request):
 # Vista Elegir Grado
 def elegir_grado(request):
     if request.method == 'POST':
-        nivel = request.POST.get('nivel')
-        grado = request.POST.get('grado')
-        # Verificar vacantes
-        vacantes_disponibles = Grado.objects.filter(nivel=nivel, numero=grado, vacantes__gt=0).exists()
-        if not vacantes_disponibles:
-            return render(request, 'elegir_grado.html', {'error': 'Vacantes llenas'})
-        else:
-            return redirect('registro_ingresantes', nivel=nivel, grado=grado)
-    return render(request, 'elegir_grado.html')
+        form = ElegirGradoForm(request.POST)
+        if form.is_valid():
+            grado = form.cleaned_data['grado']
+            if grado.vacantes > 0:
+                return redirect('registro_ingresantes', grado_id=grado.id)
+            else:
+                messages.error(request, 'No hay vacantes disponibles para el grado seleccionado.')
+    else:
+        form = ElegirGradoForm()
+    
+    return render(request, 'elegir_grado.html', {'form': form})
 
 # Vista Registro Ingresantes
-def registro_ingresantes(request, nivel, grado):
+def registro_ingresantes(request, grado_id):
+    grado = Grado.objects.get(id=grado_id)
     if request.method == 'POST':
-        form_apoderado = ApoderadoForm(request.POST)
-        form_alumno = AlumnoForm(request.POST)
-        if form_apoderado.is_valid() and form_alumno.is_valid():
-            apoderado = form_apoderado.save()
-            alumno = form_alumno.save(commit=False)
-            alumno.apoderado = apoderado
-            alumno.grado = Grado.objects.get(nivel=nivel, numero=grado)
+        alumno_form = AlumnoForm(request.POST)
+        apoderado_form = ApoderadoForm(request.POST)
+        
+        if alumno_form.is_valid() and apoderado_form.is_valid():
+            apoderado = apoderado_form.save()
+            alumno = alumno_form.save(commit=False)
+            alumno.grado = grado
             alumno.save()
+            
             if alumno.es_nuevo:
                 return redirect('ingresar_certificado_estudios', alumno_id=alumno.id)
             else:
-                return HttpResponse('Solicitud enviada correctamente')
+                messages.success(request, 'Alumno registrado exitosamente.')
+                return redirect('home')
     else:
-        form_apoderado = ApoderadoForm()
-        form_alumno = AlumnoForm()
-    return render(request, 'registro_ingresantes.html', {'form_apoderado': form_apoderado, 'form_alumno': form_alumno})
+        alumno_form = AlumnoForm()
+        apoderado_form = ApoderadoForm()
+
+    return render(request, 'registro_ingresantes.html', {'alumno_form': alumno_form, 'apoderado_form': apoderado_form, 'grado': grado})
 
 # Vista Ingresar Certificado de Estudios
 def ingresar_certificado_estudios(request, alumno_id):
-    alumno = get_object_or_404(Alumno, id=alumno_id)
+    alumno = Alumno.objects.get(id=alumno_id)
     if request.method == 'POST':
         form = DocumentacionAdicionalForm(request.POST, request.FILES)
         if form.is_valid():
-            doc = form.save(commit=False)
-            doc.alumno = alumno
-            doc.save()
-            return HttpResponse('Solicitud enviada correctamente')
+            documentacion = form.save(commit=False)
+            documentacion.alumno = alumno
+            documentacion.save()
+            messages.success(request, 'Felicidades, se registró con éxito.')
+            return redirect('home')
     else:
         form = DocumentacionAdicionalForm()
+    
     return render(request, 'ingresar_certificado_estudios.html', {'form': form})

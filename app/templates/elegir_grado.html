@@ -2,21 +2,14 @@
 
 {% block content %}
     <h2>Elegir Grado</h2>
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <label for="nivel">Nivel:</label>
-        <select name="nivel" id="nivel">
-            <!-- Los valores de nivel -->
-        </select>
-        <br>
-        <label for="grado">Grado:</label>
-        <select name="grado" id="grado">
-            <!-- Los valores de grado deben actualizarse dinámicamente con JS -->
-        </select>
-        <br>
-        <button type="submit">Elegir Grado</button>
+        {{ form.as_p }}
+        <button type="submit">Verificar Vacantes</button>
     </form>
 {% endblock %}

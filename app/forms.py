@@ -1,5 +1,5 @@
 from django import forms
-from .models import Alumno,Apoderado,Grado,DocumentacionAdicional
+from .models import Alumno,Apoderado,Nivel,Grado,DocumentacionAdicional
 
 class AlumnoForm(forms.ModelForm):
     class Meta:
@@ -19,12 +19,12 @@ class DocumentacionAdicionalForm(forms.ModelForm):
         model = DocumentacionAdicional
         fields = ['certificado_estudios']
 
-class GradoForm(forms.ModelForm):
-    class Meta:
-        model = Grado
-        fields = ['nivel', 'numero']
-        
-        widgets = {
-            'nivel': forms.Select(), 
-            'numero': forms.Select()  
-        }
+class ElegirGradoForm(forms.Form):
+    nivel = forms.ModelChoiceField(queryset=Nivel.objects.all(), required=True)
+    grado = forms.ModelChoiceField(queryset=Grado.objects.none(), required=True)
+
+    def __init__(self, *args, **kwargs):
+        nivel_id = kwargs.pop('nivel_id', None)
+        super().__init__(*args, **kwargs)
+        if nivel_id:
+            self.fields['grado'].queryset = Grado.objects.filter(nivel_id=nivel_id)
