@@ -41,7 +41,7 @@ class Nivel(models.Model):
 class Grado(models.Model):
     nivel = models.ForeignKey(Nivel, on_delete=models.CASCADE, related_name='grados')
     numero = models.PositiveSmallIntegerField()
-    vacantes = models.PositiveIntegerField(default=100)  # Por ejemplo, inicializa con 30 vacantes
+    vacantes = models.PositiveIntegerField()
 
     def __str__(self):
         return f"{self.numero} - {self.nivel.nivel}"

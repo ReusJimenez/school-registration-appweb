@@ -9,7 +9,41 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <label for="nivel">Nivel:</label>
+        <select name="nivel" id="nivel">
+            <option value="">Seleccione un nivel</option>
+            {% for nivel in niveles %}
+                <option value="{{ nivel.id }}">{{ nivel.nivel }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="grado">Grado:</label>
+        <select name="grado" id="grado">
+            <option value="">Seleccione un grado</option>
+        </select>
+        <br>
         <button type="submit">Verificar Vacantes</button>
     </form>
+
+    <script>
+        document.getElementById('nivel').addEventListener('change', function() {
+            var nivelId = this.value;
+            var gradoSelect = document.getElementById('grado');
+            gradoSelect.innerHTML = '<option value="">Seleccione un grado</option>';  // Limpiar el select de grados
+
+            if (nivelId) {
+                fetch('/get_grados/' + nivelId + '/')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(grado => {
+                            var option = document.createElement('option');
+                            option.value = grado.id;
+                            option.textContent = grado.numero + ' - ' + grado.nivel__nivel;
+                            gradoSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
 {% endblock %}
