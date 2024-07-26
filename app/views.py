@@ -18,10 +18,8 @@ def elegir_grado(request):
             try:
                 grado = Grado.objects.get(id=grado_id)
                 if grado.vacantes > 0:
-                    # Redirigir a la página de registro de ingresantes si hay vacantes
                     return redirect('registro_ingresantes')
                 else:
-                    # Devolver un mensaje de error si el grado no tiene vacantes
                     messages.error(request, 'No hay vacantes disponibles para el grado seleccionado.')
             except Grado.DoesNotExist:
                 messages.error(request, 'El grado seleccionado no existe.')
