@@ -31,7 +31,7 @@ Si tienes alguna pregunta o sugerencia, no dudes en contactar a:
 
 - Nombre: [Roberto Edmundo Eustaquio Jiménez]
 - Email: [reusjimenez2002@gmail.com]
-- GitHub: [[https://github.com/tu_usuario](https://github.com/ReusJimenez)]
+- GitHub: [https://github.com/ReusJimenez]
 
 ---
 
