@@ -3,14 +3,17 @@
 <head>
     <title>Matrícula Colegio</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
     <header>
         <h1>Matrícula Colegio</h1>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="container">
+        <div class="card">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
 </body>
 </html>

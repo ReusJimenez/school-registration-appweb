@@ -9,16 +9,77 @@
     {% endif %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <div>
+            <h4 class="high-text">
+                <span class="span-title">Datos del Apoderado</span>
+            </h4>
+            <div class="row">
+                {% for field in apoderado_form %}
+                    <div class="form-group col-md-6">
+                        <label for="{{ field.id_for_label }}">
+                            {% if field.field.required %}
+                                <span class="text-danger">*</span>{{ field.label }}:
+                            {% else %}
+                                <span>{{ field.label }}:</span>
+                            {% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>        
         
-        <h3>Datos del Apoderado</h3>
-        {{ apoderado_form.as_p }}
+        <div>
+            <h4 class="high-text">
+                <span class="span-title">Datos del Alumno</span>
+            </h4>
+            <div class="row">
+                {% for field in alumno_form %}
+                    <div class="form-group col-md-6">
+                        <label for="{{ field.id_for_label }}">
+                            {% if field.field.required %}
+                                <span class="text-danger">*</span>{{ field.label }}:
+                            {% else %}
+                                <span>{{ field.label }}:</span>
+                            {% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         
-        <h3>Datos del Alumno</h3>
-        {{ alumno_form.as_p }}
+        <div>
+            <h4 class="high-text">
+                <span class="span-title">Documentación Adicional</span>
+            </h4>
+            <div class="form-group">
+                {{ documentacion_form.certificado_estudios.label_tag }}
+                {{ documentacion_form.certificado_estudios }}
+                {% if documentacion_form.certificado_estudios.errors %}
+                    <div class="text-danger">
+                        {% for error in documentacion_form.certificado_estudios.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
         
-        <h3>Documentación Adicional</h3>
-        {{ documentacion_form.as_p }}
-        
-        <button type="submit">Enviar Solicitud de Matrícula</button>
+        <button class="btn btn-primary" type="submit">Enviar Solicitud de Matrícula</button>
     </form>
 {% endblock %}

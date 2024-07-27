@@ -9,20 +9,22 @@
     {% endif %}
     <form method="post">
         {% csrf_token %}
-        <label for="nivel">Nivel:</label>
-        <select name="nivel" id="nivel">
-            <option value="">Seleccione un nivel</option>
-            {% for nivel in niveles %}
-                <option value="{{ nivel.id }}">{{ nivel.nivel }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="grado">Grado:</label>
-        <select name="grado" id="grado">
-            <option value="">Seleccione un grado</option>
-        </select>
-        <br>
-        <button type="submit">Verificar Vacantes</button>
+        <div class="form-group">
+            <label for="nivel">Nivel:</label>
+            <select name="nivel" id="nivel" class="form-control">
+                <option value="">Seleccione un nivel</option>
+                {% for nivel in niveles %}
+                    <option value="{{ nivel.id }}">{{ nivel.nivel }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="grado">Grado:</label>
+            <select name="grado" id="grado" class="form-control">
+                <option value="">Seleccione un grado</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Verificar Vacantes</button>
     </form>
 
     <script>

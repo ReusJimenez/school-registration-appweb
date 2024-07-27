@@ -10,12 +10,15 @@
     <form method="post">
         {% csrf_token %}
         <p>¿Usted ya ha estudiado en nuestra institución?</p>
-        <label for="dni">Ingrese su DNI para verificar sus datos:</label>
-        <input type="text" name="dni" id="dni" required>
-        <button type="submit">Convalidar DNI</button>
+        <div class="form-group">
+            <label for="dni">Ingrese su DNI para verificar sus datos:</label>
+            <input type="text" name="dni" id="dni" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-warning mb-2">Convalidar DNI</button>
     </form>
+
     <form method="post" action="{% url 'registro_ingresantes' %}">
         {% csrf_token %}
-        <button type="submit">Ir a Registrar</button>
+        <button type="submit" class="btn btn-primary btn-block">Ir a Registrar</button>
     </form>
 {% endblock %}

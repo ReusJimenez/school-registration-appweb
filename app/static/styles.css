@@ -1,0 +1,54 @@
+header {
+    text-align: center;
+    background-color: rgb(26, 33, 95);
+    color: #fff;
+    padding: 5px;
+    box-shadow: 0 4px 4px -3px #777;
+}
+
+main {
+    height: calc(100vh - 66px);
+    width: 100wh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+h2 {
+    color: rgb(45, 52, 118);
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: rgb(17, 25, 101);
+}
+
+.card {
+    width: 700px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fefefe;
+    box-shadow: 0 4px 4px -3px #777;
+}
+
+.required-field {
+    background-color: #fafafa;
+}
+
+.high-text {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #c6c6c6;
+    line-height: 0.1em;
+    margin: 20px 0;
+}
+
+.high-text span {
+    background: #fff;
+    padding: 0 10px;
+}
+
+.span-title {
+    color: rgb(45, 52, 118);
+}
