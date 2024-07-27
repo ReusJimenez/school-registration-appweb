@@ -9,7 +9,7 @@ from .forms import AlumnoForm, ApoderadoForm, DocumentacionAdicionalForm, Elegir
 def home(request):
     return render(request, 'home.html')
 
-def elegir_grado(request):
+def verificar_vacante_grado(request):
     if request.method == 'POST':
         nivel_id = request.POST.get('nivel')
         grado_id = request.POST.get('grado')
@@ -25,7 +25,7 @@ def elegir_grado(request):
                 messages.error(request, 'El grado seleccionado no existe.')
 
     niveles = Nivel.objects.all()
-    return render(request, 'elegir_grado.html', {'niveles': niveles})
+    return render(request, 'verificar_vacante_grado.html', {'niveles': niveles})
 
 def get_grados(request, nivel_id):
     grados = Grado.objects.filter(nivel_id=nivel_id).values('id', 'numero', 'nivel__nivel')
