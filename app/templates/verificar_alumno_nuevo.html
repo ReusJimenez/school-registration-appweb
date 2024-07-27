@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Verificación de Alumno Nuevo</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Usted ya ha estudiado en nuestra institución?</p>
+        <label for="dni">Ingrese su DNI para verificar sus datos:</label>
+        <input type="text" name="dni" id="dni" required>
+        <button type="submit">Convalidar DNI</button>
+    </form>
+    <form method="post" action="{% url 'registro_ingresantes' %}">
+        {% csrf_token %}
+        <button type="submit">Ir a Registrar</button>
+    </form>
+{% endblock %}

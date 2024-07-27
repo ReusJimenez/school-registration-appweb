@@ -18,7 +18,8 @@ def verificar_vacante_grado(request):
             try:
                 grado = Grado.objects.get(id=grado_id)
                 if grado.vacantes > 0:
-                    return redirect('registro_ingresantes')
+                    request.session['grado_id'] = grado_id
+                    return redirect('verificar_alumno_nuevo')
                 else:
                     messages.error(request, 'No hay vacantes disponibles para el grado seleccionado.')
             except Grado.DoesNotExist:
@@ -32,6 +33,17 @@ def get_grados(request, nivel_id):
     return JsonResponse(list(grados), safe=False)
 
 def verificar_alumno_nuevo(request):
+    if request.method == 'POST':
+        dni = request.POST.get('dni')
+        if Alumno.objects.filter(dni_alumno=dni).exists():
+            alumno = Alumno.objects.get(dni_alumno=dni)
+            request.session['alumno_id'] = alumno.id
+            messages.success(request, 'DNI verificado. Puedes proceder al registro.')
+            return redirect('registro_ingresantes')
+        else:
+            messages.error(request, 'El DNI no está registrado. Puedes proceder con el registro de un nuevo alumno.')
+            return redirect('registro_ingresantes')
+
     return render(request, 'verificar_alumno_nuevo.html')
 
 def registro_ingresantes(request):
@@ -40,13 +52,26 @@ def registro_ingresantes(request):
         apoderado_form = ApoderadoForm(request.POST)
         documentacion_form = DocumentacionAdicionalForm(request.POST, request.FILES)
 
-        if alumno_form.is_valid() and apoderado_form.is_valid():
+        if alumno_form.is_valid() and apoderado_form.is_valid() and documentacion_form.is_valid():
             alumno = alumno_form.save()
             apoderado = apoderado_form.save()
-            
-            if alumno.es_nuevo:
-                request.session['alumno_id'] = alumno.id
-                return redirect('ingresar_certificado_estudios')
+            documentacion = documentacion_form.save(commit=False)
+            documentacion.alumno = alumno
+            documentacion.save()
+
+            # Obtener el grado_id de la sesión y disminuir una vacante en el grado correspondiente
+            grado_id = request.session.get('grado_id')
+            if grado_id:
+                grado = get_object_or_404(Grado, id=grado_id)
+                if grado.vacantes > 0:
+                    grado.vacantes -= 1
+                    grado.save()
+                else:
+                    messages.error(request, 'No hay vacantes disponibles para el grado seleccionado.')
+                    return redirect('verificar_vacante_grado')
+            else:
+                messages.error(request, 'No se pudo determinar el grado.')
+                return redirect('verificar_vacante_grado')
 
             messages.success(request, 'Solicitud de matrícula registrada con éxito.')
             return redirect('success')
@@ -61,30 +86,6 @@ def registro_ingresantes(request):
         'apoderado_form': apoderado_form,
         'documentacion_form': documentacion_form,
     })
-
-def ingresar_certificado_estudios(request):
-    if 'alumno_id' not in request.session:
-        return redirect('elegir_grado')
-
-    alumno_id = request.session.pop('alumno_id')  
-
-    if request.method == 'POST':
-        documentacion_form = DocumentacionAdicionalForm(request.POST, request.FILES)
-        
-        if documentacion_form.is_valid():
-            alumno = Alumno.objects.get(id=alumno_id)
-            documentacion = documentacion_form.save(commit=False)
-            documentacion.alumno = alumno
-            documentacion.save()
-            
-            messages.success(request, "Felicidades, se registró con éxito.")
-            return redirect('success')
-        else:
-            messages.error(request, 'Por favor, sube el certificado de estudios.')
-    else:
-        documentacion_form = DocumentacionAdicionalForm()
-
-    return render(request, 'ingresar_certificado_estudios.html', {'documentacion_form': documentacion_form})
 
 class SuccessView(TemplateView):
     template_name = 'success.html'
