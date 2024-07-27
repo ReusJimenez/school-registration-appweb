@@ -7,7 +7,7 @@ Esta es una aplicación web desarrollada en Python utilizando el framework Djang
 ## Requisitos
 
 - Python 3.x
-- Django 3.x
+- Django 5.0.6.
 - Base de Datos SQLite
 - Otros paquetes necesarios listados en `requirements.txt`
 

@@ -44,4 +44,4 @@ class Grado(models.Model):
     vacantes = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.numero} - {self.nivel.nivel}"
+        return f"{self.numero}º {self.nivel.nivel}"
