@@ -6,7 +6,7 @@ Esta es una aplicación web desarrollada en Python utilizando el framework Djang
 
 ## Requisitos
 
-- Python 3.x
+- Python 3.10.6
 - Django 5.0.6.
 - Base de Datos SQLite
 - Otros paquetes necesarios listados en `requirements.txt`
@@ -32,6 +32,10 @@ Si tienes alguna pregunta o sugerencia, no dudes en contactar a:
 - Nombre: [Roberto Edmundo Eustaquio Jiménez]
 - Email: [reusjimenez2002@gmail.com]
 - GitHub: [https://github.com/ReusJimenez]
+
+- Nombre: [Kiara Luz Fernandez Perez]
+- Email: [fernandezperezkiara@gmail.com]
+- GitHub: [https://github.com/KiaraLuz]
 
 ---
 

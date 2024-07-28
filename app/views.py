@@ -59,7 +59,6 @@ def registro_ingresantes(request):
             documentacion.alumno = alumno
             documentacion.save()
 
-            # Obtener el grado_id de la sesión y disminuir una vacante en el grado correspondiente
             grado_id = request.session.get('grado_id')
             if grado_id:
                 grado = get_object_or_404(Grado, id=grado_id)

@@ -33,7 +33,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'matricula_colegio_grupo6.urls'
+ROOT_URLCONF = 'school-registration-appweb.urls'
 
 TEMPLATES = [
     {
@@ -51,7 +51,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'matricula_colegio_grupo6.wsgi.application'
+WSGI_APPLICATION = 'school-registration-appweb.wsgi.application'
 
 
 # Database
