@@ -24,6 +24,10 @@ h2 {
     background-color: rgb(17, 25, 101);
 }
 
+.btn-secondary {
+    background-color: rgb(60, 7, 133);
+}
+
 .card {
     width: 700px;
     padding: 20px;
