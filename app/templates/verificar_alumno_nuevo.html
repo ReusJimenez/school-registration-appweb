@@ -19,7 +19,9 @@
 
     <form method="post" action="{% url 'registro_ingresantes' %}">
         {% csrf_token %}
+        <p>¿Usted es nuevo en nuestra institución?</p>
         <button type="submit" class="btn btn-primary btn-block">Ir a Registrar</button>
-        <!-- <button class="btn btn-secondary" type="submit">Cancelar</button> -->
     </form>
+
+    <button class="btn btn-secondary" type="button" onclick="window.history.back();">Cancelar</button>
 {% endblock %}
