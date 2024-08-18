@@ -2,12 +2,25 @@
 
 {% block content %}
     <h2>Requisitos para la matrícula</h2>
-    <ul>
-        <li>Datos del Apoderado</li>
-        <li>Datos del Alumno</li>
-        <li>Requisito 1</li>
-        <li>Requisito 2</li>
-        <li>Requisito 3</li>
-    </ul>
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Categoría</th>
+                <th>Requisitos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Datos del Apoderado</td>
+                <td>Nombres, Apellido Paterno, Apellido Materno, DNI del Apoderado.</td>
+            </tr>
+            <tr>
+                <td>Datos del Alumno</td>
+                <td>Nombres, Apellido Paterno, Apellido Materno, DNI del Alumno, Fecha de Nacimiento.</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
     <a class="btn btn-primary" href="{% url 'verificar_vacante_grado' %}">Solicitar Matrícula</a>
 {% endblock %}
