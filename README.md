@@ -1,17 +1,24 @@
-# Proyecto de Aplicación Web de Matrícula para Colegio Estatal
+# 📚 **School Registration AppWeb**  
 
-## Descripción
+Aplicación web desarrollada en Django para gestionar la matrícula de un colegio estatal de manera eficiente y organizada.  
 
-Esta es una aplicación web desarrollada en Python utilizando el framework Django. La aplicación está diseñada para mejorar la inscripción de la matrícula de un colegio estatal.
+## 📝 **Descripción**  
 
-## Requisitos
+Este sistema facilita la inscripción de estudiantes en un colegio estatal, optimizando el proceso de matrícula y gestión de cursos.  
 
-- Python 3.10.6
-- Django 5.0.6.
-- Base de Datos SQLite
-- Otros paquetes necesarios listados en `requirements.txt`
+## 🚀 **Características**  
 
-## Contribución
+- Registro y gestión de estudiantes.  
+- Administración de cursos y horarios.  
+- Validación de usuarios mediante autenticación segura.  
+- Base de datos centralizada con SQLite.  
+
+## 🛠 **Tecnologías Utilizadas**  
+- **Backend:** Python, Django  
+- **Frontend:** HTML, CSS, JavaScript  
+- **Base de Datos:** SQLite  
+
+## 🤝 **Contribución**  
 
 Si deseas contribuir al proyecto, sigue estos pasos:
 
@@ -21,11 +28,7 @@ Si deseas contribuir al proyecto, sigue estos pasos:
 4. Haz push a la rama (`git push origin feature/nueva-caracteristica`).
 5. Abre un Pull Request.
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
-
-## Contacto
+## 📩 **Contacto**  
 
 Si tienes alguna pregunta o sugerencia, no dudes en contactar a:
 
@@ -39,4 +42,4 @@ Si tienes alguna pregunta o sugerencia, no dudes en contactar a:
 
 ---
 
-¡Gracias por usar nuestra aplicación de matrícula para colegio estatal!
+¡Gracias por usar nuestra prueba de aplicación de matrícula para colegio estatal!
